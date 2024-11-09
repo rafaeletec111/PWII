@@ -53,42 +53,43 @@ $script = "CREATE DATABASE PW_BD;
             ('Acessórios'),
             ('Comidas');
  
-            CREATE TABLE PRODUTO_CATEGORIA (
-            PRODUTO_ID INT,
-            CATEGORIA_ID INT,
-            PRIMARY KEY (PRODUTO_ID, CATEGORIA_ID),
-            FOREIGN KEY (PRODUTO_ID) REFERENCES PRODUTOS(ID),
-            FOREIGN KEY (CATEGORIA_ID) REFERENCES CATEGORIAS(ID)
-            );
+            ALTER TABLE PRODUTOS
+            ADD COLUMN CATEGORIA_ID INT;
  
-            INSERT INTO PRODUTO_CATEGORIA (PRODUTO_ID, CATEGORIA_ID) VALUES
-                (1, 7),
-                (2, 7),
-                (3, 1),
-                (4, 5),
-                (5, 2),
-                (6, 5),
-                (7, 1),
-                (8, 3),
-                (9, 2),
-                (10, 3),
-                (11, 3),
-                (12, 3),
-                (13, 3),
-                (14, 3),
-                (15, 2),
-                (16, 3),
-                (17, 1),
-                (18, 3),
-                (19, 1),
-                (20, 3),
-                (21, 3);"
-        ;
- 
- 
-$conexao = new mysqli($servidor, $usuario, $senha, $banco);
-if($conexao->connect_error) {
-    die("falha na conexão: ".$conexao->connect_error);
-}
- 
+            ALTER TABLE PRODUTOS
+            ADD CONSTRAINT FK_PRODUTOS_CATEGORIAS
+            FOREIGN KEY (CATEGORIA_ID) REFERENCES CATEGORIAS ( ID );"
+        ; 
+        <?php
+       
+        $host = 'localhost'; 
+        $user = 'root'; 
+        $password = ''; 
+        $dbname = 'sistema'; 
+    
+     
+        $conn = new mysqli($host, $user, $password, $dbname);
+        
+        if ($conn->connect_error) {
+            die("Conexão falhou: " . $conn->connect_error);
+        }
+        
+        if ($conn->multi_query($sql)) {
+            echo "Tabelas criadas com sucesso!";
+        } else {
+            echo "Erro ao criar tabelas: " . $conn->error;
+        }
+        ?>
+        <?php
+        $host = 'localhost';
+        $user = 'root';
+        $password = '';
+        $dbname = 'sistema';
+        
+        $conn = new mysqli($host, $user, $password, $dbname);
+        
+        if ($conn->connect_error) {
+            die("Conexão falhou: " . $conn->connect_error);
+        }
+        ?>
 ?>
